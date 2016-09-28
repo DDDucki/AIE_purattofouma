@@ -55,8 +55,13 @@ var TILESET_SPACING = 2;
 var TILESET_COUNT_X = 14;
 var TILESET_COUNT_Y = 14;
 
+var score = 0;
+
+
 var tileset = document.createElement ("img");
 tileset.src = "tileset.png";
+
+
 
 
 
@@ -153,17 +158,23 @@ var keyboard = new Keyboard ();
  // abitrary choice for 1m
 var METER = TILE;
  // very exaggerated gravity (6x)
-var GRAVITY = METER * 9.8 * 6;
+var GRAVITY = METER * 9.8 * 4;
  // max horizontal speed (10 tiles per second)
 var MAXDX = METER * 10;
  // max vertical speed (15 tiles per second)
 var MAXDY = METER * 15;
  // horizontal acceleration - take 1/2 second to reach maxdx
-var ACCEL = MAXDX * 2;
+var ACCEL = MAXDX * 6;
  // horizontal friction - take 1/6 second to stop from maxdx
 var FRICTION = MAXDX * 6;
  // (a large) instantaneous jump impulse
 var JUMP = METER * 1500;
+
+var heartImage = document.createElement("img");
+heartImage.src= "heart.png";
+
+var heartWidth = 20;
+var heartHeight = 20;
 
 function run()
 {
@@ -175,6 +186,15 @@ function run()
 	player.update(deltaTime);
 	player.draw();
 	drawMap();
+	
+	context.fillStyle = "red";
+	context.font = "20px Arial";
+	context.fillText("Lives" , 490, 27)
+	
+	for (var i=0; i<player.lives; ++i)
+	{
+		context.drawImage(heartImage, (canvas.width-100) + ((heartWidth + 2) * i), 10, heartWidth, heartHeight);
+	}
 		
 	// update the frame counter 
 	fpsTime += deltaTime;
@@ -185,6 +205,8 @@ function run()
 		fps = fpsCount;
 		fpsCount = 0;
 	}		
+	
+	
 		
 	// draw the FPS
 	context.fillStyle = "#f00";
