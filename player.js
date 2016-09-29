@@ -201,7 +201,12 @@ Player.prototype.onDeath = function()
 	{
 			this.isAlive = false;
 			console.log("GIT GUD SKRUBLORD")
-		}
+		}Player.prototype.draw = function()
+{
+this.sprite.draw(context,
+this.position.x - worldOffsetX,
+this.position.y);
+}
 	}
 }
 
