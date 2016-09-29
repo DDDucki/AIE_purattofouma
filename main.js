@@ -82,9 +82,6 @@ function cellAtTileCoord(layer, tx, ty)
 		// let the player drop of the bottom of the screen (this means death)
 	if(ty>=MAP.th || ty < 0 || ty >= cells[layer].length)
 		return 0;
-
-	console.log(ty);
-	console.log("num Ys " + cells[layer].length);
 	
 	return cells[layer][ty][tx];
 	return 0 ;
@@ -152,6 +149,9 @@ function drawMap()
  }
 }
 
+var musicBackground;
+var sfxFire
+
 var cells = []; // the array that holds our simplified collision data
 function initialize() {
 	for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) { // initialize the collision map
@@ -177,6 +177,24 @@ function initialize() {
 			}	
 		}
 	}
+	
+	musicBackground = new Howl(
+	{
+			urls: ["background.ogg"],
+			loop: true,
+			buffer: true,
+			volume: 0.5
+	});
+	musicBackground.play();
+	
+	
+	sfxFire = new Howl(
+	{
+		urls: ["fireEffect.ogg"],
+		buffer: true,
+		volume:  1
+	});
+	
 }
 
 var player = new Player();
@@ -185,7 +203,7 @@ var keyboard = new Keyboard ();
  // abitrary choice for 1m
 var METER = TILE;
  // very exaggerated gravity (6x)
-var GRAVITY = METER * 9.8 * 3;
+var GRAVITY = METER * 9.8 * 4 ;
  // max horizontal speed (10 tiles per second)
 var MAXDX = METER * 10;
  // max vertical speed (15 tiles per second)
